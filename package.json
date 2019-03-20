@@ -1,0 +1,47 @@
+{
+  "name": "dynamic-form-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "babel lib --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tes/dynamic-form-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tes/dynamic-form-generator/issues"
+  },
+  "homepage": "https://github.com/tes/dynamic-form-generator#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.1",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.4.0",
+    "chai": "^4.2.0",
+    "env-test": "^1.0.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "jsdom": "^14.0.0",
+    "mocha": "^6.0.2",
+    "react-dom": "^16.8.4",
+    "sinon": "^7.2.7",
+    "waait": "^1.0.4"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4"
+  }
+}

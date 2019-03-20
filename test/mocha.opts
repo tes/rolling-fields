@@ -1,0 +1,10 @@
+--require test/setup.js
+--require @babel/register
+--require @babel/polyfill
+--reporter spec
+--colors
+--recursive
+--require env-test
+--timeout 5000
+--extension js,jsx
+--exit
