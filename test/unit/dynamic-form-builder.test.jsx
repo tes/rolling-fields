@@ -2,8 +2,6 @@ import React from 'react';
 import { assert } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
-import sinon from 'sinon';
-import wait from 'waait';
 
 import DynamicFormBuilder from '../../lib';
 
@@ -15,6 +13,20 @@ describe('Dynamic form builder', () => {
       <DynamicFormBuilder form={[]} mappings={{}}>
       </DynamicFormBuilder>,
     );
-    assert.include(wrapper.html(), 'div');
+    assert.include(wrapper.html(), 'form');
   });
+
+    it('creates a text input by default', () => {
+        const form = [
+            {
+            name: "test",
+            }
+        ];
+        const wrapper = mount(
+            <DynamicFormBuilder form={form} mappings={{}}>
+            </DynamicFormBuilder>,
+        );
+        assert.include(wrapper.html(), 'input');
+        assert.include(wrapper.html(), 'test');
+    });
 });
