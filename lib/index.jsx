@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 /* eslint-disable react/prop-types */
 export const defaultMappings = {
   string: ({
-    name, key, onChange, onBlur, additionalProps,
+    name, key, onChange, onBlur, ...additionalProps
   }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} />),
+  number: ({
+    name, key, onChange, onBlur, ...additionalProps
+  }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="number" />),
   password: ({
-    name, key, onChange, onBlur, additionalProps,
-  }) => (<input name={name} key={key} type="password" onChange={onChange} onBlur={onBlur} {...additionalProps} />),
-  submit: ({ text = 'Submit', key }) => (<button type="submit" key={key}>{text}</button>),
+    name, key, onChange, onBlur, ...additionalProps
+  }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="password" />),
+  submit: ({ text = 'Submit', key }) => (<button key={key} type="submit">{text}</button>),
 };
 /* eslint-enable react/prop-types */
 
@@ -18,7 +21,7 @@ const DynamicFormBuilder = ({
 }) => {
   let hasCustomSubmit = false;
   return (
-    <form onSubmit={values => onSubmit(values)}>
+    <form onSubmit={onSubmit}>
       {form.map((field, index) => {
         const { name, type = 'string' } = field;
         if (type === 'submit') hasCustomSubmit = true;
