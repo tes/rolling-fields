@@ -9,6 +9,20 @@ export const defaultMappings = {
   number: ({
     name, key, onChange, onBlur, ...additionalProps
   }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="number" />),
+  select: ({
+    name, key, options, onChange, onBlur, ...additionalProps
+  }) => (
+    <select name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps}>
+      {options.map(
+        ({ value, text, ...optionProps }) => (
+          <option key={Math.random() * 100} value={value} {...optionProps}>
+            {text || value}
+          </option>
+        ),
+      )
+      }
+    </select>
+  ),
   password: ({
     name, key, onChange, onBlur, ...additionalProps
   }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="password" />),
