@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { assert } from 'chai';
+import { spy } from 'sinon';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 
@@ -8,12 +9,19 @@ import DynamicFormBuilder from '../../lib';
 
 configure({ adapter: new Adapter() });
 
+const defaultProps = {
+  form: [],
+  mappings: {},
+  onSubmit: () => {},
+};
+
 describe('Dynamic form builder', () => {
-  it('renders the component', () => {
+  it('renders the form and submit button', () => {
     const wrapper = mount(
-      <DynamicFormBuilder form={[]} mappings={{}} />,
+      <DynamicFormBuilder {...defaultProps} />,
     );
     assert.include(wrapper.html(), 'form');
+    assert.include(wrapper.html(), 'submit');
   });
 
   it('creates a text input by default', () => {
@@ -23,7 +31,7 @@ describe('Dynamic form builder', () => {
       },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder form={form} mappings={{}} />,
+      <DynamicFormBuilder {...defaultProps} form={form} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -35,7 +43,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder form={form} mappings={{}} />,
+      <DynamicFormBuilder {...defaultProps} form={form} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -48,7 +56,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2', type: 'password' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder form={form} />,
+      <DynamicFormBuilder form={form} onSubmit={() => {}} />,
     );
 
     const inputs = wrapper.find('input');
@@ -65,11 +73,40 @@ describe('Dynamic form builder', () => {
       custom: ({ key, name }) => (<input key={key} name={name} />),
     };
     const wrapper = mount(
-      <DynamicFormBuilder form={form} mappings={mappings} />,
+      <DynamicFormBuilder form={form} mappings={mappings} onSubmit={() => {}} />,
     );
 
     const inputs = wrapper.find('input');
     assert.equal(inputs.length, 1);
     assert.deepEqual(inputs.at(0).props(), { name: 'test' });
+  });
+
+  it('will override the default submit button implementation', () => {
+    const form = [
+      { name: 'test', type: 'custom' },
+      { type: 'submit', text: 'Save' },
+    ];
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onSubmit={() => {}} />,
+    );
+
+    const button = wrapper.find('button');
+    assert.equal(button.length, 1);
+    assert.deepEqual(button.at(0).props(), { type: 'submit', children: 'Save' });
+  });
+
+  it('will call the provided onSubmit function on form submission', () => {
+    const form = [
+      { name: 'test' },
+    ];
+    const onSubmitSpy = spy();
+
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onSubmit={onSubmitSpy} />,
+    );
+
+    const button = wrapper.find('button');
+    button.simulate('submit');
+    assert.equal(onSubmitSpy.calledOnce, true);
   });
 });
