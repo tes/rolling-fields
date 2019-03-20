@@ -61,8 +61,8 @@ describe('Dynamic form builder', () => {
 
     const inputs = wrapper.find('input');
     assert.equal(inputs.length, 2);
-    assert.deepEqual(inputs.at(0).props(), { name: 'test' });
-    assert.deepEqual(inputs.at(1).props(), { name: 'test2', type: 'password' });
+    assert.include(inputs.at(0).props(), { name: 'test' });
+    assert.include(inputs.at(1).props(), { name: 'test2', type: 'password' });
   });
 
   it('will use the mappings object and call the render function based on the type', () => {
@@ -108,5 +108,69 @@ describe('Dynamic form builder', () => {
     const button = wrapper.find('button');
     button.simulate('submit');
     assert.equal(onSubmitSpy.calledOnce, true);
+  });
+
+  it('will call the provided onChange function', () => {
+    const form = [
+      { name: 'test' },
+    ];
+    const onChangeSpy = spy();
+
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onChange={onChangeSpy} onSubmit={defaultProps.onSubmit} />,
+    );
+
+    wrapper.find('input').simulate('change', { target: { value: 'My new value' } });
+    assert.equal(onChangeSpy.calledOnce, true);
+  });
+
+  it('will call the provided onChange function for the field', () => {
+    const onChangeSpy = spy();
+    const onFieldChangeSpy = spy();
+    const form = [
+      { name: 'testWithOnChange', onChange: onFieldChangeSpy },
+    ];
+
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onChange={onChangeSpy} onSubmit={defaultProps.onSubmit} />,
+    );
+
+    wrapper.find('input').simulate('change', { target: { value: 'My new value' } });
+    assert.equal(onChangeSpy.called, false);
+    assert.equal(onFieldChangeSpy.calledOnce, true);
+  });
+
+  it('will call the provided onBlur function', () => {
+    const form = [
+      { name: 'test' },
+    ];
+    const onBlurSpy = spy();
+
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+    );
+
+    wrapper.find('input').simulate('focus');
+    wrapper.find('input').simulate('change', { target: { value: 'My new value' } });
+    wrapper.find('input').simulate('blur');
+    assert.equal(onBlurSpy.calledOnce, true);
+  });
+
+  it('will call the provided onBlur function for the field', () => {
+    const onBlurSpy = spy();
+    const onFieldBlurSpy = spy();
+    const form = [
+      { name: 'testWithOnBlur', onBlur: onFieldBlurSpy },
+    ];
+
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+    );
+
+    wrapper.find('input').simulate('focus');
+    wrapper.find('input').simulate('change', { target: { value: 'My new value' } });
+    wrapper.find('input').simulate('blur');
+    assert.equal(onBlurSpy.called, false);
+    assert.equal(onFieldBlurSpy.calledOnce, true);
   });
 });
