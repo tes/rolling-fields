@@ -10,23 +10,21 @@ configure({ adapter: new Adapter() });
 describe('Dynamic form builder', () => {
   it('renders the component', () => {
     const wrapper = mount(
-      <DynamicFormBuilder form={[]} mappings={{}}>
-      </DynamicFormBuilder>,
+      <DynamicFormBuilder form={[]} mappings={{}} />,
     );
     assert.include(wrapper.html(), 'form');
   });
 
-    it('creates a text input by default', () => {
-        const form = [
-            {
-            name: "test",
-            }
-        ];
-        const wrapper = mount(
-            <DynamicFormBuilder form={form} mappings={{}}>
-            </DynamicFormBuilder>,
-        );
-        assert.include(wrapper.html(), 'input');
-        assert.include(wrapper.html(), 'test');
-    });
+  it('creates a text input by default', () => {
+    const form = [
+      {
+        name: 'test',
+      },
+    ];
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} mappings={{}} />,
+    );
+    assert.include(wrapper.html(), 'input');
+    assert.include(wrapper.html(), 'test');
+  });
 });

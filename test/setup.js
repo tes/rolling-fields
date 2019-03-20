@@ -13,7 +13,7 @@ function copyProps(src, target) {
 global.window = window;
 global.document = window.document;
 global.navigator = { userAgent: 'node.js' };
-global.requestAnimationFrame = (callback) => setTimeout(callback, 0);
-global.cancelAnimationFrame = (id) => clearTimeout(id);
+global.requestAnimationFrame = callback => setTimeout(callback, 0);
+global.cancelAnimationFrame = id => clearTimeout(id);
 
 copyProps(window, global);
