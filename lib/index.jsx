@@ -9,6 +9,9 @@ export const defaultMappings = {
   number: ({
     name, key, onChange, onBlur, ...additionalProps
   }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="number" />),
+  boolean: ({
+    name, key, onChange, onBlur, ...additionalProps
+  }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="checkbox" />),
   select: ({
     name, key, options, onChange, onBlur, ...additionalProps
   }) => (

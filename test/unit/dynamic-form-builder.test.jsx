@@ -65,6 +65,19 @@ describe('Dynamic form builder', () => {
     assert.include(inputs.at(1).props(), { name: 'test2', type: 'password' });
   });
 
+  it('creates a boolean component ', () => {
+    const form = [
+      { name: 'test1', type: 'boolean' },
+    ];
+    const wrapper = mount(
+      <DynamicFormBuilder form={form} onSubmit={() => {}} />,
+    );
+    const inputs = wrapper.find('input');
+
+    assert.equal(inputs.length, 1);
+    assert.include(inputs.at(0).props(), { name: 'test1', type: 'checkbox' });
+  });
+
   it('creates a select component and passes the provided options down', () => {
     const form = [
       { name: 'test', type: 'select', options: [{ value: 'first' }, { value: 'second', text: 'Second' }] },
