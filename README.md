@@ -24,8 +24,8 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/dy
    const fields = [
       { name: 'green field' },
       { name: 'open field', type: 'password' },
+      { type: 'submit', text: 'Submit' },
     ];
-    
    <DynamicFormBuilder fields={fields} />
 ```
 

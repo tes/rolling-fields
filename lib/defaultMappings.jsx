@@ -29,6 +29,9 @@ const defaultMappings = {
     name, key, onChange, onBlur, ...additionalProps
   }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} type="password" />),
   submit: ({ text = 'Submit', key }) => (<button key={key} type="submit">{text}</button>),
+  default: ({
+    name, key, onChange, onBlur, ...additionalProps
+  }) => (<input name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps} />),
 };
 
 export default defaultMappings;

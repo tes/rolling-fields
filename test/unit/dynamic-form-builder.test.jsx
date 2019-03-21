@@ -6,22 +6,24 @@ import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 
 import DynamicFormBuilder from '../../lib';
+import defaultMappings from '../../lib/defaultMappings';
 
 configure({ adapter: new Adapter() });
 
 const defaultProps = {
   fields: [],
-  mappings: {},
+  mappings: defaultMappings,
   onSubmit: () => {},
+  onChange: () => {},
+  onBlur: () => {},
 };
 
 describe('Dynamic form builder', () => {
-  it('renders the form and submit button', () => {
+  it('renders the form', () => {
     const wrapper = mount(
       <DynamicFormBuilder {...defaultProps} />,
     );
     assert.include(wrapper.html(), 'form');
-    assert.include(wrapper.html(), 'submit');
   });
 
   it('creates a text input by default', () => {
@@ -103,12 +105,12 @@ describe('Dynamic form builder', () => {
       custom: ({ key, name }) => (<input key={key} name={name} />),
     };
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} mappings={mappings} onSubmit={() => {}} />,
+      <DynamicFormBuilder fields={fields} mappings={mappings} onBlur={null} onChange={null} />,
     );
 
     const inputs = wrapper.find('input');
     assert.equal(inputs.length, 1);
-    assert.deepEqual(inputs.at(0).props(), { name: 'test' });
+    assert.deepEqual(inputs.at(0).props(), { name: 'test', onChange: null, onBlur: null });
   });
 
   it('will override the default submit button implementation', () => {
@@ -128,11 +130,15 @@ describe('Dynamic form builder', () => {
   it('will call the provided onSubmit function on form submission', () => {
     const fields = [
       { name: 'test' },
+      { type: 'submit' },
     ];
     const onSubmitSpy = spy();
 
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onSubmit={onSubmitSpy} />,
+      <DynamicFormBuilder
+        fields={fields}
+        onSubmit={onSubmitSpy}
+      />,
     );
 
     const button = wrapper.find('button');
