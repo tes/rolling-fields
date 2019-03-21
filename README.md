@@ -7,12 +7,14 @@ A simple library that will dynamically generate a form with the fields you speci
 ```
   <DynamicFormBuilder
     fields={} // array of field objects
-    mappings={} // custom object to define how to render different types of fields
+    mappings={} // optional object to define how to render different types of fields
     onSubmit={} 
     onBlur={}
     onChange={}
   />
 ```
+
+If no custom mappings are supplied, [default mappings](https://github.com/tes/dynamic-form-generator/blob/master/lib/defaultMappings.jsx) will be used.
 
 ## Usage
 
