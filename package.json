@@ -1,21 +1,22 @@
 {
   "name": "dynamic-form-generator",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "A dynamic form generator for React (not dependent on any particular form library)",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "scripts": {
     "test": "mocha",
     "build": "babel lib --out-dir dist",
-    "lint": "eslint --ext .jsx,.js ./lib ./test",
-    "lint:fix": "eslint --ext .jsx,.js --fix ./lib ./test"
+    "lint": "eslint --fix --ext .jsx,.js ./lib ./test",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tes/dynamic-form-generator.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["react", "form"],
+  "author": "Tes Global <info@tesgobal.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/tes/dynamic-form-generator/issues"
   },
@@ -51,7 +52,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.4"
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0"
   }
 }
