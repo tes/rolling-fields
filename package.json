@@ -6,8 +6,9 @@
   "module": "dist/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "babel lib --out-dir dist",
-    "lint": "eslint --fix --ext .jsx,.js ./lib ./test",
+    "build": "babel lib --out-file dist/index.js",
+    "lint": "eslint --ext .jsx,.js ./lib ./test",
+    "lint:fix": "eslint --ext .jsx,.js --fix ./lib ./test",
     "prepublishOnly": "npm run build"
   },
   "repository": {
