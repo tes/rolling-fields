@@ -34,12 +34,12 @@ export const defaultMappings = {
 /* eslint-enable react/prop-types */
 
 const DynamicFormBuilder = ({
-  form, mappings, onSubmit, onChange, onBlur,
+  fields, mappings, onSubmit, onChange, onBlur,
 }) => {
   let hasCustomSubmit = false;
   return (
     <form onSubmit={onSubmit}>
-      {form.map((field, index) => {
+      {fields.map((field, index) => {
         const { name, type = 'string' } = field;
         if (type === 'submit') hasCustomSubmit = true;
         const key = `${name}${index}`;
@@ -53,7 +53,7 @@ const DynamicFormBuilder = ({
 };
 
 DynamicFormBuilder.propTypes = {
-  form: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
   mappings: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func,
