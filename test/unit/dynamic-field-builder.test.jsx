@@ -98,12 +98,12 @@ describe('Dynamic form builder', () => {
       custom: ({ key, name }) => (<input key={key} name={name} />),
     };
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} mappings={mappings} onBlur={null} onChange={null} />,
+      <DynamicFieldBuilder fields={fields} mappings={mappings} />,
     );
 
     const inputs = wrapper.find('input');
     assert.equal(inputs.length, 1);
-    assert.deepEqual(inputs.at(0).props(), { name: 'test', onChange: null, onBlur: null });
+    assert.deepEqual(inputs.at(0).props(), { name: 'test' });
   });
 
   it('will override the default submit button implementation', () => {
