@@ -1,41 +1,36 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import defaultMappings from './defaultMappings';
 import generateMappings from './generateMappings';
 
-const DynamicFormBuilder = ({
-  fields, mappings, onSubmit, onChange, onBlur,
-}) => (
-  <form onSubmit={onSubmit}>
-    {fields.map((field, index) => {
-      const { name, type } = field;
-      const key = `${name}${index}`;
-      const mappingVariables = {
-        key,
-        name,
-        type,
-        mappings,
-        onChange,
-        onBlur,
-        field,
-      };
-      return generateMappings({ ...mappingVariables });
-    })}
-  </form>
+const DynamicFieldBuilder = ({
+  fields, mappings, onChange, onBlur,
+}) => (fields.map((field, index) => {
+  const { name, type } = field;
+  const key = `${name}${index}`;
+  const mappingVariables = {
+    key,
+    name,
+    type,
+    mappings,
+    onChange,
+    onBlur,
+    field,
+  };
+  return generateMappings({ ...mappingVariables });
+})
 );
 
-DynamicFormBuilder.propTypes = {
+DynamicFieldBuilder.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
   mappings: PropTypes.shape(),
-  onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
 };
 
-DynamicFormBuilder.defaultProps = {
+DynamicFieldBuilder.defaultProps = {
   mappings: defaultMappings,
   onChange: () => {},
   onBlur: () => {},
 };
 
-export default DynamicFormBuilder;
+export default DynamicFieldBuilder;

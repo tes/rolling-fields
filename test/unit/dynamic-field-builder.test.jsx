@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 
-import DynamicFormBuilder from '../../lib';
+import DynamicFieldBuilder from '../../lib';
 import defaultMappings from '../../lib/defaultMappings';
 
 configure({ adapter: new Adapter() });
@@ -19,13 +19,6 @@ const defaultProps = {
 };
 
 describe('Dynamic form builder', () => {
-  it('renders the form', () => {
-    const wrapper = mount(
-      <DynamicFormBuilder {...defaultProps} />,
-    );
-    assert.include(wrapper.html(), 'form');
-  });
-
   it('creates a text input by default', () => {
     const fields = [
       {
@@ -33,7 +26,7 @@ describe('Dynamic form builder', () => {
       },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder {...defaultProps} fields={fields} />,
+      <DynamicFieldBuilder {...defaultProps} fields={fields} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -45,7 +38,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder {...defaultProps} fields={fields} />,
+      <DynamicFieldBuilder {...defaultProps} fields={fields} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -58,7 +51,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2', type: 'password' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onSubmit={() => {}} />,
+      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
     );
 
     const inputs = wrapper.find('input');
@@ -72,7 +65,7 @@ describe('Dynamic form builder', () => {
       { name: 'test1', type: 'boolean' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onSubmit={() => {}} />,
+      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
     );
     const inputs = wrapper.find('input');
 
@@ -85,7 +78,7 @@ describe('Dynamic form builder', () => {
       { name: 'test', type: 'select', options: [{ value: 'first' }, { value: 'second', text: 'Second' }] },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onSubmit={() => {}} />,
+      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
     );
 
     const select = wrapper.find('select');
@@ -105,7 +98,7 @@ describe('Dynamic form builder', () => {
       custom: ({ key, name }) => (<input key={key} name={name} />),
     };
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} mappings={mappings} onBlur={null} onChange={null} />,
+      <DynamicFieldBuilder fields={fields} mappings={mappings} onBlur={null} onChange={null} />,
     );
 
     const inputs = wrapper.find('input');
@@ -119,7 +112,7 @@ describe('Dynamic form builder', () => {
       { type: 'submit', text: 'Save' },
     ];
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onSubmit={() => {}} />,
+      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
     );
 
     const button = wrapper.find('button');
@@ -127,7 +120,7 @@ describe('Dynamic form builder', () => {
     assert.deepEqual(button.at(0).props(), { type: 'submit', children: 'Save' });
   });
 
-  it('will call the provided onSubmit function on form submission', () => {
+  it('will call the onSubmit function on submit button click', () => {
     const fields = [
       { name: 'test' },
       { type: 'submit' },
@@ -135,10 +128,11 @@ describe('Dynamic form builder', () => {
     const onSubmitSpy = spy();
 
     const wrapper = mount(
-      <DynamicFormBuilder
-        fields={fields}
-        onSubmit={onSubmitSpy}
-      />,
+      <form onSubmit={onSubmitSpy}>
+        <DynamicFieldBuilder
+          fields={fields}
+        />
+      </form>,
     );
 
     const button = wrapper.find('button');
@@ -153,7 +147,7 @@ describe('Dynamic form builder', () => {
     const onChangeSpy = spy();
 
     const wrapper = mount(
-      <DynamicFormBuilder
+      <DynamicFieldBuilder
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -172,7 +166,7 @@ describe('Dynamic form builder', () => {
     const onChangeSpy = spy();
 
     const wrapper = mount(
-      <DynamicFormBuilder
+      <DynamicFieldBuilder
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -192,7 +186,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFormBuilder
+      <DynamicFieldBuilder
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -216,7 +210,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFormBuilder
+      <DynamicFieldBuilder
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -236,7 +230,7 @@ describe('Dynamic form builder', () => {
     const onBlurSpy = spy();
 
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+      <DynamicFieldBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
     );
 
     wrapper.find('input').simulate('focus');
@@ -253,7 +247,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFormBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+      <DynamicFieldBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
     );
 
     wrapper.find('input').simulate('focus');

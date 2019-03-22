@@ -1,14 +1,13 @@
-# dynamic-form-generator
+# dynamic-field-generator
 
-A simple library that will dynamically generate a form with the fields you specify.
+A simple library that will dynamically generate fields for your form.
 
 ## Props
 
 ```
-  <DynamicFormBuilder
+  <DynamicFieldBuilder
     fields={} // array of field objects
     mappings={} // optional object to define how to render different types of fields
-    onSubmit={} 
     onBlur={}
     onChange={}
   />
@@ -26,7 +25,10 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/dy
       { name: 'open field', type: 'password' },
       { type: 'submit', text: 'Submit' },
     ];
-   <DynamicFormBuilder fields={fields} />
+
+   <form>
+    <DynamicFieldBuilder fields={fields} />
+   </form>
 ```
 
 renders:
@@ -65,7 +67,9 @@ renders:
         key, text
       }) => (<button type="submit key={key}>{text}</button>),
     
-   <DynamicFormBuilder fields={fields} mappings={mappings} />
+  <form>
+    <DynamicFieldBuilder fields={fields} mappings={mappings} />
+  </form>
 ```
 
 renders:
