@@ -14,7 +14,6 @@ npm-debug.log
 newrelic_agent.log
 npm-debug.log.*
 *.sublime-*
-dist
 .floo
 .flooignore
 disc
