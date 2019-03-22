@@ -6,7 +6,7 @@ const DynamicFieldBuilder = ({
   fields, mappings, onChange, onBlur,
 }) => (fields.map((field, index) => {
   const { name, type } = field;
-  const key = `${name}${index}`;
+  const key = (`${name}${index}`).replace(/\s/g,'');
   const mappingVariables = {
     key,
     name,
