@@ -9,13 +9,17 @@
     "build": "babel lib --out-file dist/index.js",
     "lint": "eslint --ext .jsx,.js ./lib ./test",
     "lint:fix": "eslint --ext .jsx,.js --fix ./lib ./test",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tes/dynamic-form-generator.git"
   },
-  "keywords": ["react", "form"],
+  "keywords": [
+    "react",
+    "form"
+  ],
   "author": "Tes Global <info@tesgobal.com>",
   "license": "MIT",
   "bugs": {
