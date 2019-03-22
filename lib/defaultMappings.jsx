@@ -17,7 +17,7 @@ const defaultMappings = {
     <select name={name} key={key} onChange={onChange} onBlur={onBlur} {...additionalProps}>
       {options.map(
         ({ value, text, ...optionProps }) => (
-          <option key={Math.random() * 100} value={value} {...optionProps}>
+          <option key={`${value}${text}`} value={value} {...optionProps}>
             {text || value}
           </option>
         ),
