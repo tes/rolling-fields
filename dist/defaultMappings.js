@@ -21,7 +21,8 @@ var defaultMappings = {
         key = _ref.key,
         onChange = _ref.onChange,
         onBlur = _ref.onBlur,
-        additionalProps = _objectWithoutProperties(_ref, ["name", "key", "onChange", "onBlur"]);
+        setFieldValue = _ref.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref, ["name", "key", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("input", _extends({
       name: name,
@@ -35,7 +36,8 @@ var defaultMappings = {
         key = _ref2.key,
         onChange = _ref2.onChange,
         onBlur = _ref2.onBlur,
-        additionalProps = _objectWithoutProperties(_ref2, ["name", "key", "onChange", "onBlur"]);
+        setFieldValue = _ref2.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref2, ["name", "key", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("input", _extends({
       name: name,
@@ -51,7 +53,8 @@ var defaultMappings = {
         key = _ref3.key,
         onChange = _ref3.onChange,
         onBlur = _ref3.onBlur,
-        additionalProps = _objectWithoutProperties(_ref3, ["name", "key", "onChange", "onBlur"]);
+        setFieldValue = _ref3.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref3, ["name", "key", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("input", _extends({
       name: name,
@@ -68,7 +71,8 @@ var defaultMappings = {
         options = _ref4.options,
         onChange = _ref4.onChange,
         onBlur = _ref4.onBlur,
-        additionalProps = _objectWithoutProperties(_ref4, ["name", "key", "options", "onChange", "onBlur"]);
+        setFieldValue = _ref4.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref4, ["name", "key", "options", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("select", _extends({
       name: name,
@@ -91,7 +95,8 @@ var defaultMappings = {
         key = _ref6.key,
         onChange = _ref6.onChange,
         onBlur = _ref6.onBlur,
-        additionalProps = _objectWithoutProperties(_ref6, ["name", "key", "onChange", "onBlur"]);
+        setFieldValue = _ref6.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref6, ["name", "key", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("input", _extends({
       name: name,
@@ -116,7 +121,8 @@ var defaultMappings = {
         key = _ref8.key,
         onChange = _ref8.onChange,
         onBlur = _ref8.onBlur,
-        additionalProps = _objectWithoutProperties(_ref8, ["name", "key", "onChange", "onBlur"]);
+        setFieldValue = _ref8.setFieldValue,
+        additionalProps = _objectWithoutProperties(_ref8, ["name", "key", "onChange", "onBlur", "setFieldValue"]);
 
     return _react.default.createElement("input", _extends({
       name: name,

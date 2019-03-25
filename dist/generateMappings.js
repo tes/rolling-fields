@@ -20,17 +20,20 @@ var generateMappings = function generateMappings(_ref) {
       mappings = _ref.mappings,
       onChange = _ref.onChange,
       onBlur = _ref.onBlur,
+      setFieldValue = _ref.setFieldValue,
       field = _ref.field;
 
   if (mappings.default && typeof mappings.default === 'function') {
     return mappings[type] ? mappings[type](_objectSpread({
       key: key,
       onChange: onChange,
-      onBlur: onBlur
+      onBlur: onBlur,
+      setFieldValue: setFieldValue
     }, field)) : mappings.default(_objectSpread({
       key: key,
       onChange: onChange,
-      onBlur: onBlur
+      onBlur: onBlur,
+      setFieldValue: setFieldValue
     }, field));
   }
 

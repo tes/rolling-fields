@@ -6,10 +6,11 @@ A simple library that will dynamically generate fields for your form.
 
 ```
   <DynamicFieldBuilder
-    fields={} // array of field objects
-    mappings={} // optional object to define how to render different types of fields
+    fields={} // Array of field objects
+    mappings={} // Optional object to define how to render different types of fields
     onBlur={}
     onChange={}
+    setFieldValue={} // Use for custom input that does not support HTML SyntheticEvent
   />
 ```
 

@@ -8,15 +8,16 @@ const generateMappings = ({
   mappings,
   onChange,
   onBlur,
+  setFieldValue,
   field,
 }) => {
   if (mappings.default && typeof mappings.default === 'function') {
     return mappings[type]
       ? mappings[type]({
-        key, onChange, onBlur, ...field,
+        key, onChange, onBlur, setFieldValue, ...field,
       })
       : mappings.default({
-        key, onChange, onBlur, ...field,
+        key, onChange, onBlur, setFieldValue, ...field,
       });
   }
   return <input name={name} key={key} onChange={onChange} onBlur={onBlur} />;
