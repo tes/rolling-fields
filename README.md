@@ -80,7 +80,14 @@ renders:
   <input name="open field" id="custom"> Something cool! </input>
   <button type="submit">Just do it!</button>
  </form>
- ```
- 
- 
- 
+ ``` 
+
+#### How to run storybook
+Clone this repository and run
+```
+npm install
+```
+You can run storybook on development using:
+```
+npm run storybook
+```
