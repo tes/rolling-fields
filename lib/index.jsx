@@ -3,7 +3,7 @@ import generateMappings from './generateMappings';
 import defaultMappings from './defaultMappings';
 
 export default function DynamicFieldBuilder({
-  fields, mappings: customMappings, onChange, onBlur,
+  fields, mappings: customMappings, onChange, onBlur, setFieldValue,
 }) {
   const mappings = { ...defaultMappings, ...customMappings };
   return (fields.map((field, index) => {
@@ -16,6 +16,7 @@ export default function DynamicFieldBuilder({
       mappings,
       onChange,
       onBlur,
+      setFieldValue,
       field,
     };
     return generateMappings({ ...mappingVariables });
@@ -28,10 +29,12 @@ DynamicFieldBuilder.propTypes = {
   mappings: PropTypes.shape(),
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  setFieldValue: PropTypes.func,
 };
 
 DynamicFieldBuilder.defaultProps = {
   mappings: defaultMappings,
   onChange: () => {},
   onBlur: () => {},
+  setFieldValue: () => {},
 };

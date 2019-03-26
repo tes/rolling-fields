@@ -21,7 +21,8 @@ function DynamicFieldBuilder(_ref) {
   var fields = _ref.fields,
       customMappings = _ref.mappings,
       onChange = _ref.onChange,
-      onBlur = _ref.onBlur;
+      onBlur = _ref.onBlur,
+      setFieldValue = _ref.setFieldValue;
 
   var mappings = _objectSpread({}, _defaultMappings.default, customMappings);
 
@@ -36,6 +37,7 @@ function DynamicFieldBuilder(_ref) {
       mappings: mappings,
       onChange: onChange,
       onBlur: onBlur,
+      setFieldValue: setFieldValue,
       field: field
     };
     return (0, _generateMappings.default)(_objectSpread({}, mappingVariables));
@@ -46,10 +48,12 @@ DynamicFieldBuilder.propTypes = {
   fields: _propTypes.default.arrayOf(_propTypes.default.object).isRequired,
   mappings: _propTypes.default.shape(),
   onChange: _propTypes.default.func,
-  onBlur: _propTypes.default.func
+  onBlur: _propTypes.default.func,
+  setFieldValue: _propTypes.default.func
 };
 DynamicFieldBuilder.defaultProps = {
   mappings: _defaultMappings.default,
   onChange: function onChange() {},
-  onBlur: function onBlur() {}
+  onBlur: function onBlur() {},
+  setFieldValue: function setFieldValue() {}
 };

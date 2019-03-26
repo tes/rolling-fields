@@ -140,6 +140,30 @@ describe('Dynamic form builder', () => {
     assert.equal(onSubmitSpy.calledOnce, true);
   });
 
+  it('will call the provided setFieldValue function', () => {
+    const fields = [
+      { name: 'test', type: 'custom' },
+    ];
+    const mappings = {
+      custom: ({ key, name, setFieldValue }) => (
+        <input key={key} name={name} onChange={e => setFieldValue(name, e.target.value)} />
+      ),
+    };
+    const setFieldValueSpy = spy();
+
+    const wrapper = mount(
+      <DynamicFieldBuilder
+        fields={fields}
+        mappings={mappings}
+        setFieldValue={setFieldValueSpy}
+        onSubmit={defaultProps.onSubmit}
+      />,
+    );
+
+    wrapper.find('input').simulate('change', { target: { value: 'My new value' } });
+    assert.equal(setFieldValueSpy.calledOnce, true);
+  });
+
   it('will call the provided onChange function', () => {
     const fields = [
       { name: 'test' },
