@@ -9,7 +9,9 @@
     "build": "babel lib --out-dir dist",
     "lint": "eslint --ext .jsx,.js ./lib ./test",
     "lint:fix": "eslint --ext .jsx,.js --fix ./lib ./test",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -52,7 +54,12 @@
     "mocha": "^6.0.2",
     "react-dom": "^16.8.4",
     "sinon": "^7.2.7",
-    "waait": "^1.0.4"
+    "waait": "^1.0.4",
+    "@storybook/react": "^5.0.5",
+    "@storybook/addon-actions": "^5.0.5",
+    "@storybook/addon-links": "^5.0.5",
+    "@storybook/addons": "^5.0.5",
+    "babel-loader": "^8.0.5"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.0",
