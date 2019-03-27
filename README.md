@@ -1,4 +1,4 @@
-# dynamic-field-generator
+# rolling-fields
 
 A simple library that will dynamically generate fields for your form.
 
@@ -14,7 +14,7 @@ A simple library that will dynamically generate fields for your form.
   />
 ```
 
-If no custom mappings are supplied, [default mappings](https://github.com/tes/dynamic-form-generator/blob/master/lib/defaultMappings.jsx) will be used.
+If no custom mappings are supplied, [default mappings](https://github.com/tes/rolling-fields/blob/master/lib/defaultMappings.jsx) will be used.
 
 ## Usage
 
