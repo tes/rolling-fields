@@ -140,6 +140,21 @@ describe('Dynamic form builder', () => {
     assert.equal(onSubmitSpy.calledOnce, true);
   });
 
+  it('will render the input with the given value', () => {
+    const fields = [
+      { name: 'test', value: 'Hello!' },
+    ];
+
+    const wrapper = mount(
+      <DynamicFieldBuilder
+        fields={fields}
+      />,
+    );
+
+    const input = wrapper.find('input');
+    assert.equal(input.props().value, 'Hello!');
+  });
+
   it('will call the provided setFieldValue function', () => {
     const fields = [
       { name: 'test', type: 'custom' },
