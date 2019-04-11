@@ -155,6 +155,32 @@ describe('Dynamic form builder', () => {
     assert.equal(input.props().value, 'Hello!');
   });
 
+  it('will render the input and assign initial values', () => {
+    const fields = [
+      { name: 'test' },
+      { name: 'another test' },
+      { name: 4 },
+    ];
+
+    const initialValues = {
+      test: 'First value',
+      'another test': 'Second value',
+      4: 'Final value',
+    };
+
+    const wrapper = mount(
+      <DynamicFieldBuilder
+        fields={fields}
+        initialValues={initialValues}
+      />,
+    );
+
+    const input = wrapper.find('input');
+    assert.equal(input.getElements()[0].props.value, 'First value');
+    assert.equal(input.getElements()[1].props.value, 'Second value');
+    assert.equal(input.getElements()[2].props.value, 'Final value');
+  });
+
   it('will call the provided setFieldValue function', () => {
     const fields = [
       { name: 'test', type: 'custom' },
