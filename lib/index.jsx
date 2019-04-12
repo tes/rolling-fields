@@ -33,6 +33,7 @@ DynamicFieldBuilder.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   setFieldValue: PropTypes.func,
+  initialValues: PropTypes.shape(),
 };
 
 DynamicFieldBuilder.defaultProps = {
