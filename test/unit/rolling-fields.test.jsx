@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure, mount } from 'enzyme';
 
-import DynamicFieldBuilder from '../../lib';
+import RollingFields from '../../lib';
 import defaultMappings from '../../lib/defaultMappings';
 
 configure({ adapter: new Adapter() });
@@ -18,7 +18,7 @@ const defaultProps = {
   onBlur: () => {},
 };
 
-describe('Dynamic form builder', () => {
+describe('Rolling fields', () => {
   it('creates a text input by default', () => {
     const fields = [
       {
@@ -26,7 +26,7 @@ describe('Dynamic form builder', () => {
       },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder {...defaultProps} fields={fields} />,
+      <RollingFields {...defaultProps} fields={fields} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -38,7 +38,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2' },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder {...defaultProps} fields={fields} />,
+      <RollingFields {...defaultProps} fields={fields} />,
     );
     assert.include(wrapper.html(), 'input');
     assert.include(wrapper.html(), 'test');
@@ -51,7 +51,7 @@ describe('Dynamic form builder', () => {
       { name: 'test2', type: 'password' },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
+      <RollingFields fields={fields} onSubmit={() => {}} />,
     );
 
     const inputs = wrapper.find('input');
@@ -65,7 +65,7 @@ describe('Dynamic form builder', () => {
       { name: 'test1', type: 'boolean' },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
+      <RollingFields fields={fields} onSubmit={() => {}} />,
     );
     const inputs = wrapper.find('input');
 
@@ -78,7 +78,7 @@ describe('Dynamic form builder', () => {
       { name: 'test', type: 'select', options: [{ value: 'first' }, { value: 'second', text: 'Second' }] },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
+      <RollingFields fields={fields} onSubmit={() => {}} />,
     );
 
     const select = wrapper.find('select');
@@ -98,7 +98,7 @@ describe('Dynamic form builder', () => {
       custom: ({ key, name }) => (<input key={key} name={name} />),
     };
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} mappings={mappings} />,
+      <RollingFields fields={fields} mappings={mappings} />,
     );
 
     const inputs = wrapper.find('input');
@@ -112,7 +112,7 @@ describe('Dynamic form builder', () => {
       { type: 'submit', text: 'Save' },
     ];
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onSubmit={() => {}} />,
+      <RollingFields fields={fields} onSubmit={() => {}} />,
     );
 
     const button = wrapper.find('button');
@@ -129,7 +129,7 @@ describe('Dynamic form builder', () => {
 
     const wrapper = mount(
       <form onSubmit={onSubmitSpy}>
-        <DynamicFieldBuilder
+        <RollingFields
           fields={fields}
         />
       </form>,
@@ -146,7 +146,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
       />,
     );
@@ -169,7 +169,37 @@ describe('Dynamic form builder', () => {
     };
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
+        fields={fields}
+        initialValues={initialValues}
+      />,
+    );
+
+    const input = wrapper.find('input');
+    assert.equal(input.getElements()[0].props.value, 'First value');
+    assert.equal(input.getElements()[1].props.value, 'Second value');
+    assert.equal(input.getElements()[2].props.value, 'Final value');
+  });
+
+  it('will render the input and assign initial values to named fields based on object nesting', () => {
+    const fields = [
+      { name: 'level1.test' },
+      { name: 'level1.level2.another test' },
+      { name: 4 },
+    ];
+
+    const initialValues = {
+      level1: {
+        test: 'First value',
+        level2: {
+          'another test': 'Second value',
+        },
+      },
+      4: 'Final value',
+    };
+
+    const wrapper = mount(
+      <RollingFields
         fields={fields}
         initialValues={initialValues}
       />,
@@ -193,7 +223,7 @@ describe('Dynamic form builder', () => {
     const setFieldValueSpy = spy();
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
         mappings={mappings}
         setFieldValue={setFieldValueSpy}
@@ -212,7 +242,7 @@ describe('Dynamic form builder', () => {
     const onChangeSpy = spy();
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -231,7 +261,7 @@ describe('Dynamic form builder', () => {
     const onChangeSpy = spy();
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -251,7 +281,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -275,7 +305,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFieldBuilder
+      <RollingFields
         fields={fields}
         onChange={onChangeSpy}
         onSubmit={defaultProps.onSubmit}
@@ -295,7 +325,7 @@ describe('Dynamic form builder', () => {
     const onBlurSpy = spy();
 
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+      <RollingFields fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
     );
 
     wrapper.find('input').simulate('focus');
@@ -312,7 +342,7 @@ describe('Dynamic form builder', () => {
     ];
 
     const wrapper = mount(
-      <DynamicFieldBuilder fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
+      <RollingFields fields={fields} onBlur={onBlurSpy} onSubmit={defaultProps.onSubmit} />,
     );
 
     wrapper.find('input').simulate('focus');
