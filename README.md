@@ -2,25 +2,19 @@
 
 A simple library that will dynamically generate fields for your form.
 
-## Props
+## Installation
 
 ```
-  <DynamicFieldBuilder
-    fields={} // Array of field objects
-    mappings={} // Optional object to define how to render different types of fields
-    onBlur={}
-    onChange={}
-    setFieldValue={} // Use for custom input that does not support HTML SyntheticEvent
-  />
+npm i rolling-fields
 ```
-
-If no custom mappings are supplied, [default mappings](https://github.com/tes/rolling-fields/blob/master/lib/defaultMappings.jsx) will be used.
 
 ## Usage
 
 #### Basic
 
-```
+```jsx
+import DynamicFieldBuilder from 'rolling-fields';
+
    const fields = [
       { name: 'green field' },
       { name: 'open field', type: 'password' },
@@ -32,9 +26,9 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
    </form>
 ```
 
-renders:
+**renders:**
 
-```
+```html
  <form>
   <input name="green field" />
   <input name="open field" type="password" />
@@ -42,13 +36,25 @@ renders:
  </form>
  ```
 
+## Props
 
+```jsx
+  <DynamicFieldBuilder
+    fields={} // Array of field objects
+    mappings={} // Optional object to define how to render different types of fields
+    onBlur={}
+    onChange={}
+    setFieldValue={} // Use for custom input that does not support HTML SyntheticEvent
+  />
+```
+
+If no custom mappings are supplied, [default mappings](https://github.com/tes/rolling-fields/blob/master/lib/defaultMappings.jsx) will be used.
  
 #### Custom mappings
 
-```
-  const MyCustomInput = ({name, key}) => (
-    <input name={name} key={key} id="custom"> Something cool! </input>
+```jsx
+  const MyCustomInput = ({ name }) => (
+    <input name={name} className="custom"> Something cool! </input>
     )
 
    const fields = [
@@ -58,37 +64,36 @@ renders:
     ];
     
     const mappings = {
-      string: ({
-        name, key
-      }) => (<input name={name} key={key} id="string-field" />),
-      custom: ({
-        name, key
-      }) => (<MyCustomComponent name={name} key={key} />),
-     submit: ({
-        key, text
-      }) => (<button type="submit key={key}>{text}</button>),
+      string: ({ name }) => (<input name={name} className="string-field" />),
+      custom: ({ name }) => (<MyCustomComponent name={name} />),
+      submit: ({ name }) => (<button type="submit" >{text}</button>),
     
   <form>
     <DynamicFieldBuilder fields={fields} mappings={mappings} />
   </form>
 ```
 
-renders:
+**renders:**
 
-```
+```html
  <form>
-  <input name="green field" id="string-field" />
-  <input name="open field" id="custom"> Something cool! </input>
+  <input name="green field" class="string-field" />
+  <input name="open field" class="custom"> Something cool! </input>
   <button type="submit">Just do it!</button>
  </form>
  ``` 
 
-#### How to run storybook
+#### How to run tests and storybook
+
 Clone this repository and run
 ```
 npm install
 ```
-You can run storybook on development using:
+You can run the [mocha](https://github.com/mochajs/mocha) tests with
+```
+npm test
+```
+You can run [storybook]()https://github.com/storybooks/storybook/tree/master/app/react on locally using:
 ```
 npm run storybook
 ```
