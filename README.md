@@ -116,10 +116,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tes/rolling-fields/tags). 
 
-## Contributing
-
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Acknowledgements
+## Contribution
 
 This project is brought to you by [Tes](https://github.com/tes) engineers. Check out [contributors](https://github.com/tes/rolling-fields/graphs/contributors) who participated in this project.
+
+If you have improvements to offer, please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+
+![alt text](https://upload.wikimedia.org/wikipedia/commons/4/41/Landscape-agriculture.svg)
+
+_Image by gnokii - Open Clipart, CC0_ 
