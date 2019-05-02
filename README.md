@@ -1,16 +1,18 @@
 # rolling-fields
 
-A simple library that will dynamically generate fields for your form.
+A simple library that dynamically generates fields for your React form.
 
-## Installation
+Use rolling-fields to create forms on-the-fly from a field definition stored outside your deployed code and read in at runtime.
 
-```
-npm i rolling-fields
-```
+How you build your field schema is upto you. It could be a simple as a JSON file or an API call that fetches your field schema from a database.
+
+rolling-fields also enables you make your form even more dynamic by loading different fields depending on the values a user selects inside the form. 
+
+rolling-fields is designed to be used within [Formik](https://jaredpalmer.com/formik/) or plain [React](https://reactjs.org/docs/forms.html) forms.
 
 ## Usage
 
-#### Basic
+### Basic
 
 ```jsx
 import DynamicFieldBuilder from 'rolling-fields';
@@ -36,7 +38,7 @@ import DynamicFieldBuilder from 'rolling-fields';
  </form>
  ```
 
-## Props
+### Props
 
 ```jsx
   <DynamicFieldBuilder
@@ -83,17 +85,41 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
  </form>
  ``` 
 
-#### How to run tests and storybook
+## Installation
+
+```
+npm i rolling-fields
+```
+
+## Running the tests 
 
 Clone this repository and run
 ```
 npm install
 ```
-You can run the [mocha](https://github.com/mochajs/mocha) tests with
+You can run the [mocha](https://mochajs.org/) unit tests with
 ```
 npm test
 ```
-You can run [storybook]()https://github.com/storybooks/storybook/tree/master/app/react on locally using:
+## Running storybook
+
+You can run [storybook](https://github.com/storybooks/storybook/tree/master/app/react/) locally using:
 ```
 npm run storybook
 ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tes/rolling-fields/tags). 
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Acknowledgements
+
+This project is brought to you by [Tes](https://github.com/tes) engineers. Check out [contributors](https://github.com/tes/rolling-fields/graphs/contributors) who participated in this project.
