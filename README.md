@@ -10,6 +10,12 @@ rolling-fields also enables you make your form even more dynamic by loading diff
 
 rolling-fields is designed to be used within [Formik](https://jaredpalmer.com/formik/) or plain [React](https://reactjs.org/docs/forms.html) forms.
 
+## Installation
+
+```
+npm i rolling-fields
+```
+
 ## Usage
 
 ### Basic
@@ -84,12 +90,6 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
   <button type="submit">Just do it!</button>
  </form>
  ``` 
-
-## Installation
-
-```
-npm i rolling-fields
-```
 
 ## Running the tests 
 
