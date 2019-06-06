@@ -68,7 +68,8 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
     const mappings = {
       string: ({ name }) => (<input name={name} className="string-field" />),
       custom: ({ name }) => (<MyCustomComponent name={name} />),
-      submit: ({ name }) => (<button type="submit" >{text}</button>),
+      submit: ({ name, text }) => (<button type="submit" >{text}</button>),
+    };
     
   <form>
     <DynamicFieldBuilder fields={fields} mappings={mappings} />
