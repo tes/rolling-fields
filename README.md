@@ -49,6 +49,7 @@ import DynamicFieldBuilder from 'rolling-fields';
   <DynamicFieldBuilder
     fields={} // Array of field objects
     mappings={} // Optional object to define how to render different types of fields
+    fieldContext={} // Optional value that will be shared among all fields when using custom mappping
     onBlur={}
     onChange={}
     setFieldValue={} // Use for custom input that does not support HTML SyntheticEvent
@@ -67,17 +68,35 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
    const fields = [
       { name: 'green field' },
       { name: 'open field', type: 'custom' },
+      { name: 'hide', type: 'invisible', },
+      { name: 'show' type: 'visible', },
       { type: 'submit', text: 'Just do it!' },
     ];
     
     const mappings = {
-      string: ({ name }) => (<input name={name} className="string-field" />),
-      custom: ({ name }) => (<MyCustomComponent name={name} />),
-      submit: ({ name, text }) => (<button type="submit" >{text}</button>),
+      string: ({ name }) => (
+        <input name={name} className="string-field" />
+      ),
+      custom: ({ name }) => (
+        <MyCustomComponent name={name} />
+      ),
+      invisible: ({ name }, fieldContext) => !fieldContext.isVisible && (
+        <input name={name} />
+      ),
+      visible: ({ name }, fieldContext) => fieldContext.isVisible && (
+        <input name={name} />
+      ),
+      submit: ({ name, text }) => (
+        <button type="submit" >{text}</button>
+      ),
     };
     
   <form>
-    <DynamicFieldBuilder fields={fields} mappings={mappings} />
+    <DynamicFieldBuilder
+        fields={fields}
+        mappings={mappings}
+        fieldContext={{ isVisible: true }}
+        />
   </form>
 ```
 
@@ -87,6 +106,7 @@ If no custom mappings are supplied, [default mappings](https://github.com/tes/ro
  <form>
   <input name="green field" class="string-field" />
   <input name="open field" class="custom"> Something cool! </input>
+  <input name="show" />
   <button type="submit">Just do it!</button>
  </form>
  ``` 
