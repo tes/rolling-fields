@@ -231,6 +231,29 @@ describe('Rolling fields', () => {
     assert.equal(input.getElements()[2].props.value, 'Final value');
   });
 
+  it('will use the provided field context when mapping components', () => {
+    const placeHolderText = 'Place me in my holder!';
+
+    const fields = [
+      { name: 'test', type: 'custom' },
+    ];
+    const mappings = {
+      custom: ({ key, name }, fieldContext) => (
+        <input key={key} name={name} placeholder={fieldContext.placeHolderText} />
+      ),
+    };
+    const wrapper = mount(
+      <RollingFields
+        fields={fields}
+        mappings={mappings}
+        fieldContext={{ placeHolderText }}
+      />,
+    );
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.length, 1);
+    assert.deepEqual(inputs.at(0).props(), { name: 'test', placeholder: placeHolderText });
+  });
+
   it('will call the provided setFieldValue function', () => {
     const fields = [
       { name: 'test', type: 'custom' },
