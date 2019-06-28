@@ -1,5 +1,10 @@
 # rolling-fields
 
+![alt text](https://upload.wikimedia.org/wikipedia/commons/4/41/Landscape-agriculture.svg)
+
+_Image by gnokii - Open Clipart, CC0_ 
+
+
 A simple library that dynamically generates fields for your React form.
 
 Use rolling-fields to create forms on-the-fly from a field definition stored outside your deployed code and read in at runtime.
@@ -123,7 +128,3 @@ This project is brought to you by [Tes](https://github.com/tes) engineers. Check
 
 If you have improvements to offer, please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
-
-![alt text](https://upload.wikimedia.org/wikipedia/commons/4/41/Landscape-agriculture.svg)
-
-_Image by gnokii - Open Clipart, CC0_ 
