@@ -23,6 +23,7 @@ export default function DynamicFieldBuilder({
     const fieldWithValue = value && { value, ...field };
     const key = (`${name}${index}`).replace(/\s/g, '');
     const mappingVariables = {
+      index,
       key,
       name,
       type,

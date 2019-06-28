@@ -106,6 +106,26 @@ describe('Rolling fields', () => {
     assert.deepEqual(inputs.at(0).props(), { name: 'test' });
   });
 
+  it('will give the mappings function access to the index of the field', () => {
+    const fields = [
+      { name: 'test1', type: 'custom' },
+      { name: 'test2', type: 'custom' },
+      { name: 'test3', type: 'custom' },
+    ];
+    const mappings = {
+      custom: ({ key, name, index }) => (<input key={key} name={name} value={index} />),
+    };
+    const wrapper = mount(
+      <RollingFields fields={fields} mappings={mappings} />,
+    );
+
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.length, 3);
+    assert.deepEqual(inputs.at(0).props(), { name: 'test1', value: 0 });
+    assert.deepEqual(inputs.at(1).props(), { name: 'test2', value: 1 });
+    assert.deepEqual(inputs.at(2).props(), { name: 'test3', value: 2 });
+  });
+
   it('will override the default submit button implementation', () => {
     const fields = [
       { name: 'test', type: 'custom' },
