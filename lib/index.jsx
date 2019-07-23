@@ -1,5 +1,6 @@
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import generateMappings from './generateMappings';
+import MapFields from './MapFields';
 import defaultMappings from './defaultMappings';
 
 /* eslint-disable no-param-reassign */
@@ -13,30 +14,33 @@ const getProp = (object, keys, defaultVal) => {
 };
 /* eslint-enable no-param-reassign */
 
-export default function DynamicFieldBuilder({
-  fields, mappings: customMappings, fieldContext, onChange, onBlur, setFieldValue, initialValues,
-}) {
-  const mappings = { ...defaultMappings, ...customMappings };
-  return (fields.map((field, index) => {
-    const { name, type } = field;
-    const value = initialValues && getProp(initialValues, name, '');
-    const fieldWithValue = value && { value, ...field };
-    const key = (`${name}${index}`).replace(/\s/g, '');
-    const mappingVariables = {
-      index,
-      key,
-      name,
-      type,
-      mappings,
-      onChange,
-      onBlur,
-      setFieldValue,
-      field: fieldWithValue || field,
-      value,
-    };
-    return generateMappings({ ...mappingVariables }, fieldContext);
-  })
-  );
+export default class DynamicFieldBuilder extends Component {
+  render() {
+    const {
+      fields, mappings: customMappings, onChange, onBlur, setFieldValue, initialValues,
+    } = this.props;
+    const mappings = { ...defaultMappings, ...customMappings };
+    return (fields.map((field, index) => {
+      const { name, type } = field;
+      const value = initialValues && getProp(initialValues, name, '');
+      const fieldWithValue = value && { value, ...field };
+      const key = (`${name}${index}`).replace(/\s/g, '');
+      const mappingProps = {
+        index,
+        key,
+        name,
+        type,
+        mappings,
+        onChange,
+        onBlur,
+        setFieldValue,
+        field: fieldWithValue || field,
+        value,
+      };
+      return <MapFields {...mappingProps} />;
+    })
+    );
+  }
 }
 
 DynamicFieldBuilder.propTypes = {

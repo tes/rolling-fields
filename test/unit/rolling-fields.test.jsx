@@ -394,4 +394,30 @@ describe('Rolling fields', () => {
     assert.equal(onBlurSpy.called, false);
     assert.equal(onFieldBlurSpy.calledOnce, true);
   });
+
+  it.only('will not rerender a field if the given value is the same as it was previously', () => {
+    // sinon.spy(Foo.prototype, 'componentDidMount');
+    const fields = [
+      { name: 'willChangeAndReRender', value: '' },
+      { name: 'willNotChangeOrReRender', value: '' },
+    ];
+
+    const updatedValues = {
+      willChangeAndReRender: '1000',
+    };  
+    const updatedFields = [
+      { name: 'willChangeAndReRender', value: '1000' },
+      { name: 'willNotChangeOrReRender', value: '' },
+    ];
+
+    const wrapper = mount(
+      <RollingFields fields={fields} />,
+    );
+    console.log('wrapper.children():', wrapper.children().first().html());
+    console.log('wrapper.children():', wrapper.children().last().html());
+    wrapper.setProps({ initialValues: updatedValues });
+    wrapper.update();
+    console.log('wrapper.children():', wrapper.children().first().html());
+    console.log('wrapper.children():', wrapper.children().last().html());
+  });
 });
