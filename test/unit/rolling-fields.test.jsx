@@ -107,13 +107,21 @@ describe('Rolling fields', () => {
   });
 
   it('will give the mappings function access to the index of the field', () => {
+    const dummyOnChange = () => {};
     const fields = [
       { name: 'test1', type: 'custom' },
       { name: 'test2', type: 'custom' },
       { name: 'test3', type: 'custom' },
     ];
     const mappings = {
-      custom: ({ key, name, index }) => (<input key={key} name={name} value={index} />),
+      custom: ({ key, name, index }) => (
+        <input
+          key={key}
+          name={name}
+          value={index}
+          onChange={dummyOnChange}
+        />
+      ),
     };
     const wrapper = mount(
       <RollingFields fields={fields} mappings={mappings} />,
@@ -121,9 +129,9 @@ describe('Rolling fields', () => {
 
     const inputs = wrapper.find('input');
     assert.equal(inputs.length, 3);
-    assert.deepEqual(inputs.at(0).props(), { name: 'test1', value: 0 });
-    assert.deepEqual(inputs.at(1).props(), { name: 'test2', value: 1 });
-    assert.deepEqual(inputs.at(2).props(), { name: 'test3', value: 2 });
+    assert.deepEqual(inputs.at(0).props(), { name: 'test1', value: 0, onChange: dummyOnChange });
+    assert.deepEqual(inputs.at(1).props(), { name: 'test2', value: 1, onChange: dummyOnChange });
+    assert.deepEqual(inputs.at(2).props(), { name: 'test3', value: 2, onChange: dummyOnChange });
   });
 
   it('will override the default submit button implementation', () => {
@@ -195,10 +203,13 @@ describe('Rolling fields', () => {
       />,
     );
 
-    const input = wrapper.find('input');
-    assert.equal(input.getElements()[0].props.value, 'First value');
-    assert.equal(input.getElements()[1].props.value, 'Second value');
-    assert.equal(input.getElements()[2].props.value, 'Final value');
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.getElements()[0].props.defaultValue, 'First value');
+    assert.equal(inputs.getElements()[1].props.defaultValue, 'Second value');
+    assert.equal(inputs.getElements()[2].props.defaultValue, 'Final value');
+    assert.include(wrapper.children().at(0).html(), 'value="First value"');
+    assert.include(wrapper.children().at(1).html(), 'value="Second value"');
+    assert.include(wrapper.children().at(2).html(), 'value="Final value"');
   });
 
   it('will render the input and assign initial values to named fields based on object nesting', () => {
@@ -225,10 +236,13 @@ describe('Rolling fields', () => {
       />,
     );
 
-    const input = wrapper.find('input');
-    assert.equal(input.getElements()[0].props.value, 'First value');
-    assert.equal(input.getElements()[1].props.value, 'Second value');
-    assert.equal(input.getElements()[2].props.value, 'Final value');
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.getElements()[0].props.defaultValue, 'First value');
+    assert.equal(inputs.getElements()[1].props.defaultValue, 'Second value');
+    assert.equal(inputs.getElements()[2].props.defaultValue, 'Final value');
+    assert.include(wrapper.children().at(0).html(), 'value="First value"');
+    assert.include(wrapper.children().at(1).html(), 'value="Second value"');
+    assert.include(wrapper.children().at(2).html(), 'value="Final value"');
   });
 
   it('will use the provided field context when mapping components', () => {
@@ -395,29 +409,65 @@ describe('Rolling fields', () => {
     assert.equal(onFieldBlurSpy.calledOnce, true);
   });
 
-  it.only('will not rerender a field if the given value is the same as it was previously', () => {
-    // sinon.spy(Foo.prototype, 'componentDidMount');
+  it('when given values produces controlled components', () => {
     const fields = [
-      { name: 'willChangeAndReRender', value: '' },
-      { name: 'willNotChangeOrReRender', value: '' },
+      { name: 'test1' },
+      { name: 'test2' },
     ];
 
-    const updatedValues = {
-      willChangeAndReRender: '1000',
-    };  
-    const updatedFields = [
-      { name: 'willChangeAndReRender', value: '1000' },
-      { name: 'willNotChangeOrReRender', value: '' },
-    ];
+    const values = {
+      test1: 1000,
+      test2: 'Great value',
+    };
 
     const wrapper = mount(
-      <RollingFields fields={fields} />,
+      <RollingFields fields={fields} values={values} />,
     );
-    console.log('wrapper.children():', wrapper.children().first().html());
-    console.log('wrapper.children():', wrapper.children().last().html());
-    wrapper.setProps({ initialValues: updatedValues });
-    wrapper.update();
-    console.log('wrapper.children():', wrapper.children().first().html());
-    console.log('wrapper.children():', wrapper.children().last().html());
+
+    assert.include(wrapper.children().first().html(), 'value="1000"');
+    assert.include(wrapper.children().last().html(), 'value="Great value"');
+
+    const updatedValues = {
+      test1: 1001,
+      test2: 'Greatest value',
+    };
+
+    wrapper.setProps({ values: updatedValues });
+    assert.include(wrapper.children().first().html(), 'value="1001"');
+    assert.include(wrapper.children().last().html(), 'value="Greatest value"');
+  });
+
+  it('when given values produces controlled components', () => {
+    const fields = [
+      { name: 'test1' },
+      { name: 'test2' },
+    ];
+
+    const values = {
+      test1: 1000,
+      test2: 'Great value',
+    };
+
+    const wrapper = mount(
+      <RollingFields fields={fields} values={values} />,
+    );
+
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.getElements()[0].props.value, 1000);
+    assert.equal(inputs.getElements()[1].props.value, 'Great value');
+    assert.include(wrapper.children().at(0).html(), 'value="1000"');
+    assert.include(wrapper.children().at(1).html(), 'value="Great value"');
+
+    const updatedValues = {
+      test1: 1001,
+      test2: 'Greatest value',
+    };
+
+    wrapper.setProps({ values: updatedValues });
+    const updatedInputs = wrapper.find('input');
+    assert.equal(updatedInputs.getElements()[0].props.value, 1001);
+    assert.equal(updatedInputs.getElements()[1].props.value, 'Greatest value');
+    assert.include(wrapper.children().at(0).html(), 'value="1001"');
+    assert.include(wrapper.children().at(1).html(), 'value="Greatest value"');
   });
 });

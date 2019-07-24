@@ -12,30 +12,43 @@ const getProp = (object, keys, defaultVal) => {
   }
   return object === undefined ? defaultVal : object;
 };
+
+const enrichField = (field, value, defaultValue) => {
+  let enrichedField = { ...field };
+  if (value) {
+    enrichedField = { value, ...enrichedField };
+  }
+  if (defaultValue) {
+    enrichedField = { defaultValue, ...enrichedField };
+  }
+  return enrichedField;
+};
 /* eslint-enable no-param-reassign */
 
 export default class DynamicFieldBuilder extends Component {
   render() {
     const {
-      fields, mappings: customMappings, onChange, onBlur, setFieldValue, initialValues,
+      fields, mappings: customMappings, onChange, onBlur, setFieldValue, initialValues, values,
     } = this.props;
     const mappings = { ...defaultMappings, ...customMappings };
     return (fields.map((field, index) => {
       const { name, type } = field;
-      const value = initialValues && getProp(initialValues, name, '');
-      const fieldWithValue = value && { value, ...field };
-      const key = (`${name}${index}`).replace(/\s/g, '');
+      const value = values && getProp(values, name, '');
+      const defaultValue = initialValues && getProp(initialValues, name, '');
+      const enrichedField = enrichField(field, value, defaultValue);
+
+      const id = (`${name}${index}`).replace(/\s/g, '');
       const mappingProps = {
         index,
-        key,
+        id,
+        key: id,
         name,
         type,
         mappings,
         onChange,
         onBlur,
         setFieldValue,
-        field: fieldWithValue || field,
-        value,
+        field: enrichedField,
       };
       return <MapFields {...mappingProps} />;
     })
@@ -50,6 +63,7 @@ DynamicFieldBuilder.propTypes = {
   onBlur: PropTypes.func,
   setFieldValue: PropTypes.func,
   initialValues: PropTypes.shape(),
+  values: PropTypes.shape(),
 };
 
 DynamicFieldBuilder.defaultProps = {
@@ -57,4 +71,6 @@ DynamicFieldBuilder.defaultProps = {
   onChange: () => {},
   onBlur: () => {},
   setFieldValue: () => {},
+  initialValues: null,
+  values: null,
 };

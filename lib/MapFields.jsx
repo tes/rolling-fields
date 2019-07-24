@@ -2,23 +2,9 @@
 import React, { Component } from 'react';
 
 class MapFields extends Component {
-  shouldComponentUpdate(nextProps) {
-    console.log('this.props:', this.props);
-    console.log('nextProps:', nextProps);
-    
-    
-    const { value } = this.props;
-    console.log('value:', value);
-    console.log('nextProps.value:', nextProps.value);
-    //
-    //
-    // return nextProps.value !== value;
-    return true;
-  }
-
   render() {
     const {
-      key,
+      id,
       name,
       type,
       index,
@@ -31,13 +17,13 @@ class MapFields extends Component {
     if (mappings.default && typeof mappings.default === 'function') {
       return mappings[type]
         ? mappings[type]({
-          index, key, onChange, onBlur, setFieldValue, ...field,
+          index, key: id, onChange, onBlur, setFieldValue, ...field,
         })
         : mappings.default({
-          index, key, onChange, onBlur, setFieldValue, ...field,
+          index, key: id, onChange, onBlur, setFieldValue, ...field,
         });
     }
-    return <input name={name} key={key} onChange={onChange} onBlur={onBlur} />;
+    return <input name={name} key={id} onChange={onChange} onBlur={onBlur} />;
   }
 }
 
