@@ -40,9 +40,13 @@ describe('Rolling fields', () => {
     const wrapper = mount(
       <RollingFields {...defaultProps} fields={fields} />,
     );
-    assert.include(wrapper.html(), 'input');
-    assert.include(wrapper.html(), 'test');
-    assert.include(wrapper.html(), 'test2');
+    const inputs = wrapper.find('input');
+    assert.include(inputs.at(0).props(), { name: 'test' });
+    assert.include(inputs.at(0).html(), 'input');
+    assert.include(inputs.at(0).html(), 'test');
+    assert.include(inputs.at(1).props(), { name: 'test2' });
+    assert.include(inputs.at(1).html(), 'input');
+    assert.include(inputs.at(1).html(), 'test2');
   });
 
   it('creates multiple text inputs by default with different types', () => {

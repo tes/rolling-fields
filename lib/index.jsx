@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import MapFields from './MapFields';
+import MapField from './MapField';
 import defaultMappings from './defaultMappings';
 
 /* eslint-disable no-param-reassign */
@@ -25,36 +25,40 @@ const enrichField = (field, value, defaultValue) => {
 };
 /* eslint-enable no-param-reassign */
 
-export default class DynamicFieldBuilder extends Component {
-  render() {
-    const {
-      fields, mappings: customMappings, onChange, onBlur, setFieldValue, initialValues, values,
-    } = this.props;
-    const mappings = { ...defaultMappings, ...customMappings };
-    return (fields.map((field, index) => {
-      const { name, type } = field;
-      const value = values && getProp(values, name, '');
-      const defaultValue = initialValues && getProp(initialValues, name, '');
-      const enrichedField = enrichField(field, value, defaultValue);
+const DynamicFieldBuilder = ({
+  fields,
+  mappings: customMappings,
+  onChange,
+  onBlur,
+  setFieldValue,
+  initialValues,
+  values,
+}) => {
+  const mappings = { ...defaultMappings, ...customMappings };
+  return (fields.map((field, index) => {
+    const { name, type } = field;
+    const value = values && getProp(values, name, '');
+    const defaultValue = initialValues && getProp(initialValues, name, '');
 
-      const id = (`${name}${index}`).replace(/\s/g, '');
-      const mappingProps = {
-        index,
-        id,
-        key: id,
-        name,
-        type,
-        mappings,
-        onChange,
-        onBlur,
-        setFieldValue,
-        field: enrichedField,
-      };
-      return <MapFields {...mappingProps} />;
-    })
-    );
-  }
-}
+    const enrichedField = enrichField(field, value, defaultValue);
+
+    const id = (`${name}${index}`).replace(/\s/g, '');
+    const mappingProps = {
+      index,
+      id,
+      key: id,
+      name,
+      type,
+      mappings,
+      onChange,
+      onBlur,
+      setFieldValue,
+      field: enrichedField,
+    };
+    return <MapField {...mappingProps} />;
+  })
+  );
+};
 
 DynamicFieldBuilder.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -74,3 +78,5 @@ DynamicFieldBuilder.defaultProps = {
   initialValues: null,
   values: null,
 };
+
+export default DynamicFieldBuilder;
