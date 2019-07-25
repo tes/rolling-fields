@@ -1,27 +1,53 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { Component } from 'react';
 
-const MapField = ({
-  id,
-  name,
-  type,
-  index,
-  mappings,
-  onChange,
-  onBlur,
-  setFieldValue,
-  field,
-}) => {
-  if (mappings.default && typeof mappings.default === 'function') {
+class MapField extends Component {
+  shouldComponentUpdate(nextProps) {
+    const { value, defaultValue } = this.props;
+    return (value !== nextProps.value) || (defaultValue !== nextProps.defaultValue);
+  }
+
+  render() {
+    const {
+      id,
+      name,
+      type,
+      index,
+      mappings,
+      onChange,
+      onBlur,
+      setFieldValue,
+      value,
+      defaultValue,
+      field,
+    } = this.props;
+
+    if (!mappings.default || typeof mappings.default !== 'function') {
+      return <input name={name} key={id} onChange={onChange} onBlur={onBlur} />;
+    }
+
     return mappings[type]
       ? mappings[type]({
-        index, key: id, onChange, onBlur, setFieldValue, ...field,
+        value,
+        defaultValue,
+        index,
+        key: id,
+        onChange,
+        onBlur,
+        setFieldValue,
+        ...field,
       })
       : mappings.default({
-        index, key: id, onChange, onBlur, setFieldValue, ...field,
+        value,
+        defaultValue,
+        index,
+        key: id,
+        onChange,
+        onBlur,
+        setFieldValue,
+        ...field,
       });
   }
-  return <input name={name} key={id} onChange={onChange} onBlur={onBlur} />;
-};
+}
 
 export default MapField;

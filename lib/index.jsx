@@ -12,17 +12,6 @@ const getProp = (object, keys, defaultVal) => {
   }
   return object === undefined ? defaultVal : object;
 };
-
-const enrichField = (field, value, defaultValue) => {
-  let enrichedField = { ...field };
-  if (value) {
-    enrichedField = { value, ...enrichedField };
-  }
-  if (defaultValue) {
-    enrichedField = { defaultValue, ...enrichedField };
-  }
-  return enrichedField;
-};
 /* eslint-enable no-param-reassign */
 
 const DynamicFieldBuilder = ({
@@ -39,9 +28,6 @@ const DynamicFieldBuilder = ({
     const { name, type } = field;
     const value = values && getProp(values, name, '');
     const defaultValue = initialValues && getProp(initialValues, name, '');
-
-    const enrichedField = enrichField(field, value, defaultValue);
-
     const id = (`${name}${index}`).replace(/\s/g, '');
     const mappingProps = {
       index,
@@ -53,7 +39,9 @@ const DynamicFieldBuilder = ({
       onChange,
       onBlur,
       setFieldValue,
-      field: enrichedField,
+      value,
+      defaultValue,
+      field,
     };
     return <MapField {...mappingProps} />;
   })
@@ -75,8 +63,8 @@ DynamicFieldBuilder.defaultProps = {
   onChange: () => {},
   onBlur: () => {},
   setFieldValue: () => {},
-  initialValues: null,
-  values: null,
+  initialValues: undefined,
+  values: undefined,
 };
 
 export default DynamicFieldBuilder;
