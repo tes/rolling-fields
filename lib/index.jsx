@@ -14,7 +14,7 @@ const getProp = (object, keys, defaultVal) => {
 /* eslint-enable no-param-reassign */
 
 export default function DynamicFieldBuilder({
-  fields, mappings: customMappings, onChange, onBlur, setFieldValue, initialValues,
+  fields, mappings: customMappings, fieldContext, onChange, onBlur, setFieldValue, initialValues,
 }) {
   const mappings = { ...defaultMappings, ...customMappings };
   return (fields.map((field, index) => {
@@ -34,7 +34,7 @@ export default function DynamicFieldBuilder({
       field: fieldWithValue || field,
       value,
     };
-    return generateMappings({ ...mappingVariables });
+    return generateMappings({ ...mappingVariables }, fieldContext);
   })
   );
 }
