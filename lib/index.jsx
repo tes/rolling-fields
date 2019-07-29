@@ -1,5 +1,6 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import generateMappings from './generateMappings';
+import MapField from './MapField';
 import defaultMappings from './defaultMappings';
 
 /* eslint-disable no-param-reassign */
@@ -13,39 +14,50 @@ const getProp = (object, keys, defaultVal) => {
 };
 /* eslint-enable no-param-reassign */
 
-export default function DynamicFieldBuilder({
-  fields, mappings: customMappings, fieldContext, onChange, onBlur, setFieldValue, initialValues,
-}) {
+const DynamicFieldBuilder = ({
+  fields,
+  fieldContext,
+  mappings: customMappings,
+  onChange,
+  onBlur,
+  setFieldValue,
+  initialValues,
+  values,
+}) => {
   const mappings = { ...defaultMappings, ...customMappings };
   return (fields.map((field, index) => {
     const { name, type } = field;
-    const value = initialValues && getProp(initialValues, name, '');
-    const fieldWithValue = value && { value, ...field };
-    const key = (`${name}${index}`).replace(/\s/g, '');
-    const mappingVariables = {
+    const value = values && getProp(values, name, '');
+    const defaultValue = initialValues && getProp(initialValues, name, '');
+    const id = (`${name}${index}`).replace(/\s/g, '');
+    const mappingProps = {
       index,
-      key,
+      id,
+      key: id,
       name,
       type,
       mappings,
       onChange,
       onBlur,
       setFieldValue,
-      field: fieldWithValue || field,
       value,
+      defaultValue,
+      field,
     };
-    return generateMappings({ ...mappingVariables }, fieldContext);
+    return <MapField {...mappingProps} fieldContext={fieldContext} />;
   })
   );
-}
+};
 
 DynamicFieldBuilder.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fieldContext: PropTypes.shape(),
   mappings: PropTypes.shape(),
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   setFieldValue: PropTypes.func,
   initialValues: PropTypes.shape(),
+  values: PropTypes.shape(),
 };
 
 DynamicFieldBuilder.defaultProps = {
@@ -53,4 +65,8 @@ DynamicFieldBuilder.defaultProps = {
   onChange: () => {},
   onBlur: () => {},
   setFieldValue: () => {},
+  initialValues: undefined,
+  values: undefined,
 };
+
+export default DynamicFieldBuilder;
