@@ -1,12 +1,7 @@
 /* eslint-disable react/prop-types */
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
-class MapField extends Component {
-  shouldComponentUpdate(nextProps) {
-    const { value, defaultValue } = this.props;
-    return (value !== nextProps.value) || (defaultValue !== nextProps.defaultValue);
-  }
-
+class MapField extends PureComponent {
   render() {
     const {
       id,

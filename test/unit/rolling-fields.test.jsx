@@ -474,4 +474,37 @@ describe('Rolling fields', () => {
     assert.include(wrapper.children().at(0).html(), 'value="1001"');
     assert.include(wrapper.children().at(1).html(), 'value="Greatest value"');
   });
+
+  it('will render the controlled input and assign values to named fields based on object nesting', () => {
+    const fields = [
+      { name: 'level1.test' },
+      { name: 'level1.level2.another test' },
+      { name: 4 },
+    ];
+
+    const values = {
+      level1: {
+        test: 'First value',
+        level2: {
+          'another test': 'Second value',
+        },
+      },
+      4: 'Final value',
+    };
+
+    const wrapper = mount(
+      <RollingFields
+        fields={fields}
+        values={values}
+      />,
+    );
+
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.getElements()[0].props.value, 'First value');
+    assert.equal(inputs.getElements()[1].props.value, 'Second value');
+    assert.equal(inputs.getElements()[2].props.value, 'Final value');
+    assert.include(wrapper.children().at(0).html(), 'value="First value"');
+    assert.include(wrapper.children().at(1).html(), 'value="Second value"');
+    assert.include(wrapper.children().at(2).html(), 'value="Final value"');
+  });
 });
