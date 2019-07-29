@@ -16,6 +16,7 @@ const getProp = (object, keys, defaultVal) => {
 
 const DynamicFieldBuilder = ({
   fields,
+  fieldContext,
   mappings: customMappings,
   onChange,
   onBlur,
@@ -43,13 +44,14 @@ const DynamicFieldBuilder = ({
       defaultValue,
       field,
     };
-    return <MapField {...mappingProps} />;
+    return <MapField {...mappingProps} fieldContext={fieldContext} />;
   })
   );
 };
 
 DynamicFieldBuilder.propTypes = {
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fieldContext: PropTypes.shape(),
   mappings: PropTypes.shape(),
   onChange: PropTypes.func,
   onBlur: PropTypes.func,

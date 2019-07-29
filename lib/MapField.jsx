@@ -20,6 +20,7 @@ class MapField extends Component {
       value,
       defaultValue,
       field,
+      fieldContext,
     } = this.props;
 
     if (!mappings.default || typeof mappings.default !== 'function') {
@@ -36,7 +37,7 @@ class MapField extends Component {
         onBlur,
         setFieldValue,
         ...field,
-      })
+      }, fieldContext)
       : mappings.default({
         value,
         defaultValue,
@@ -46,7 +47,7 @@ class MapField extends Component {
         onBlur,
         setFieldValue,
         ...field,
-      });
+      }, fieldContext);
   }
 }
 
