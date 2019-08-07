@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MapField from './MapField';
 import defaultMappings from './defaultMappings';
+import MapFieldWrapper from './MapFieldWrapper';
 
 /* eslint-disable no-param-reassign */
 const getProp = (object, keys, defaultVal) => {
@@ -23,6 +23,7 @@ const DynamicFieldBuilder = ({
   setFieldValue,
   initialValues,
   values,
+  customShouldComponentUpdate,
 }) => {
   const mappings = { ...defaultMappings, ...customMappings };
   return (fields.map((field, index) => {
@@ -43,8 +44,9 @@ const DynamicFieldBuilder = ({
       value,
       defaultValue,
       field,
+      customShouldComponentUpdate,
     };
-    return <MapField {...mappingProps} fieldContext={fieldContext} />;
+    return <MapFieldWrapper {...mappingProps} fieldContext={fieldContext} />;
   })
   );
 };
