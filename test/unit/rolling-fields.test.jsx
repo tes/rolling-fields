@@ -507,4 +507,51 @@ describe('Rolling fields', () => {
     assert.include(wrapper.children().at(1).html(), 'value="Second value"');
     assert.include(wrapper.children().at(2).html(), 'value="Final value"');
   });
+
+  it('will only update according to the customShouldComponentUpdate if provided', () => {
+    const fields = [
+      { name: 'test' },
+      { name: 'test2' },
+      { name: 'frozenValue' },
+    ];
+
+    const values = {
+      test: 'First value',
+      test2: 'Second value',
+      frozenValue: 'Should not update',
+    };
+
+    const customShouldComponentUpdateFunction = props => props.name !== 'frozenValue';
+
+    const wrapper = mount(
+      <RollingFields
+        fields={fields}
+        values={values}
+        customShouldComponentUpdate={customShouldComponentUpdateFunction}
+      />,
+    );
+
+    const inputs = wrapper.find('input');
+    assert.equal(inputs.getElements()[0].props.value, 'First value');
+    assert.equal(inputs.getElements()[1].props.value, 'Second value');
+    assert.equal(inputs.getElements()[2].props.value, 'Should not update');
+    assert.include(wrapper.children().at(0).html(), 'value="First value"');
+    assert.include(wrapper.children().at(1).html(), 'value="Second value"');
+    assert.include(wrapper.children().at(2).html(), 'value="Should not update"');
+    const updatedValues = {
+      test: 'First value',
+      test2: 'THIS SHOULD CHANGE',
+      frozenValue: 'THIS SHOULD STAY THE SAME AS BEFORE',
+    };
+
+    wrapper.setProps({ values: updatedValues });
+    wrapper.update();
+    const updatedInputs = wrapper.find('input');
+    assert.equal(updatedInputs.getElements()[0].props.value, 'First value');
+    assert.equal(updatedInputs.getElements()[1].props.value, 'THIS SHOULD CHANGE');
+    assert.equal(updatedInputs.getElements()[2].props.value, 'Should not update');
+    assert.include(wrapper.children().at(0).html(), 'value="First value"');
+    assert.include(wrapper.children().at(1).html(), 'value="THIS SHOULD CHANGE"');
+    assert.include(wrapper.children().at(2).html(), 'value="Should not update"');
+  });
 });
