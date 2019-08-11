@@ -1,5 +1,8 @@
 # rolling-fields
 
+[![dependencies Status](https://david-dm.org/tes/rolling-fields/status.svg)](https://david-dm.org/tes/rolling-fields)
+[![NPM version](https://img.shields.io/npm/v/marv.svg?style=flat-square)](https://www.npmjs.com/package/marv)
+
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/4/41/Landscape-agriculture.svg)
 
 _Image by gnokii - Open Clipart, CC0_ 
