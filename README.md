@@ -18,6 +18,8 @@ rolling-fields also enables you make your form even more dynamic by loading diff
 
 rolling-fields is designed to be used within [Formik](https://jaredpalmer.com/formik/) or plain [React](https://reactjs.org/docs/forms.html) forms.
 
+To find out more about the benefits of using rolling-fields, check out this [Rolling Your Own Dynamic Forms](https://engineering.tes.com/post/rolling-fields/) blog post.
+
 ## Usage
 
 ### Basic
