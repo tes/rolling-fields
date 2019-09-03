@@ -24,10 +24,12 @@ const DynamicFieldBuilder = ({
   initialValues,
   values,
   customShouldComponentUpdate,
+  errors,
 }) => {
   const mappings = { ...defaultMappings, ...customMappings };
   return (fields.map((field, index) => {
     const { name, type } = field;
+    const error = errors && getProp(errors, name);
     const value = values && getProp(values, name, '');
     const defaultValue = initialValues && getProp(initialValues, name, '');
     const id = (`${name}${index}`).replace(/\s/g, '');
@@ -45,6 +47,7 @@ const DynamicFieldBuilder = ({
       defaultValue,
       field,
       customShouldComponentUpdate,
+      error,
     };
     return <MapFieldWrapper {...mappingProps} fieldContext={fieldContext} />;
   })
@@ -60,6 +63,7 @@ DynamicFieldBuilder.propTypes = {
   setFieldValue: PropTypes.func,
   initialValues: PropTypes.shape(),
   values: PropTypes.shape(),
+  errors: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 DynamicFieldBuilder.defaultProps = {
