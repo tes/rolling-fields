@@ -16,6 +16,7 @@ class MapField extends PureComponent {
       defaultValue,
       field,
       fieldContext,
+      error,
     } = this.props;
 
     if (!mappings.default || typeof mappings.default !== 'function') {
@@ -31,6 +32,7 @@ class MapField extends PureComponent {
         onChange,
         onBlur,
         setFieldValue,
+        error,
         ...field,
       }, fieldContext)
       : mappings.default({
@@ -41,6 +43,7 @@ class MapField extends PureComponent {
         onChange,
         onBlur,
         setFieldValue,
+        error,
         ...field,
       }, fieldContext);
   }

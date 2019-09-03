@@ -554,4 +554,47 @@ describe('Rolling fields', () => {
     assert.include(wrapper.children().at(1).html(), 'value="THIS SHOULD CHANGE"');
     assert.include(wrapper.children().at(2).html(), 'value="Should not update"');
   });
+
+  it('will give the mappings function access to the error of the field', () => {
+    const fields = [
+      { name: 'test1', type: 'custom' },
+    ];
+    const mappings = {
+      custom: ({ key, name }) => (
+        <input key={key} name={name} />
+      ),
+    };
+    const errors = {
+      test1: 'test1 is required',
+      test2: 'test2 is required',
+    };
+    const customComponentSpy = spy(mappings, 'custom');
+    mount(
+      <RollingFields fields={fields} mappings={mappings} errors={errors} />,
+    );
+
+    assert.equal(customComponentSpy.calledOnce, true);
+    assert.equal(customComponentSpy.getCall(0).args[0].error, errors.test1);
+  });
+
+  it('will not give the mappings function access to the error of other field', () => {
+    const fields = [
+      { name: 'test1', type: 'custom' },
+    ];
+    const mappings = {
+      custom: ({ key, name }) => (
+        <input key={key} name={name} />
+      ),
+    };
+    const errors = {
+      test2: 'test2 is required',
+    };
+    const customComponentSpy = spy(mappings, 'custom');
+    mount(
+      <RollingFields fields={fields} mappings={mappings} errors={errors} />,
+    );
+
+    assert.equal(customComponentSpy.calledOnce, true);
+    assert.isUndefined(customComponentSpy.getCall(0).args[0].error);
+  });
 });
