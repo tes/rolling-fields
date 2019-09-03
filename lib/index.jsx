@@ -63,7 +63,7 @@ DynamicFieldBuilder.propTypes = {
   setFieldValue: PropTypes.func,
   initialValues: PropTypes.shape(),
   values: PropTypes.shape(),
-  errors: PropTypes.oneOf([PropTypes.object, PropTypes.string]),
+  errors: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 };
 
 DynamicFieldBuilder.defaultProps = {
