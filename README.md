@@ -12,11 +12,11 @@ A simple library that dynamically generates fields for your React form.
 
 Use rolling-fields to create forms on-the-fly from a field definition stored outside your deployed code and read in at runtime.
 
-How you build your field schema is upto you. It could be a simple as a JSON file or an API call that fetches your field schema from a database.
+How you build your field schema is up to you. It could be a simple as a JSON file or an API call that fetches your field schema from a database.
 
-rolling-fields also enables you make your form even more dynamic by loading different fields depending on the values a user selects inside the form. 
+rolling-fields also enables you to make your form even more dynamic by loading different fields depending on the values a user selects inside the form. 
 
-rolling-fields is designed to be used within [Formik](https://jaredpalmer.com/formik/) or plain [React](https://reactjs.org/docs/forms.html) forms.
+rolling-fields is designed to be used within [Formik](https://jaredpalmer.com/formik/) or plain [React forms](https://reactjs.org/docs/forms.html).
 
 To find out more about the benefits of using rolling-fields, check out this [Rolling Your Own Dynamic Forms](https://engineering.tes.com/post/rolling-fields/) blog post.
 
